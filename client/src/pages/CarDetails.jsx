@@ -4,6 +4,7 @@ import { assets, dummyCarData } from "../assets/assets";
 import Loader from "../components/Loader";
 import { useAppContext } from "../context/AppContext";
 import toast from "react-hot-toast";
+import { motion } from "motion/react";
 
 const CarDetails = () => {
   const { id } = useParams();
@@ -15,20 +16,19 @@ const CarDetails = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-     const {data} = await axios.post('/api/booking/create',{
-        car:id,
+      const { data } = await axios.post("/api/booking/create", {
+        car: id,
         pickupDate,
-        returnDate
-      })
-      if(data.success){
-        toast.success(data.message)
-        navigate('/my-bookings')
-      }else{
-        toast.error(data.message)
+        returnDate,
+      });
+      if (data.success) {
+        toast.success(data.message);
+        navigate("/my-bookings");
+      } else {
+        toast.error(data.message);
       }
     } catch (error) {
-      toast.error(error.message)
-      
+      toast.error(error.message);
     }
   };
 
@@ -48,13 +48,26 @@ const CarDetails = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
         {/* left car img and details  */}
-        <div className="lg:col-span-2">
-          <img
+        <motion.div
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          className="lg:col-span-2"
+        >
+          <motion.img
+            initial={{ scale: 0.98, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5 }}
             src={car.image}
             alt=""
             className="w-full h-auto md:max-h-100 object-cover rounded-xl mb-6 shadow-md"
           />
-          <div className="space-y-6">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="space-y-6"
+          >
             <div>
               <h1 className="text-3xl font-bold">
                 {car.brand} {car.model}
@@ -64,7 +77,12 @@ const CarDetails = () => {
               </p>
             </div>
             <hr className="border-borderColor my-6" />
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <motion.div
+              initial={{ y: 10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.4 }}
+              className="grid grid-cols-2 sm:grid-cols-4 gap-4"
+            >
               {[
                 {
                   icon: assets.users_icon,
@@ -82,7 +100,7 @@ const CarDetails = () => {
                   {text}
                 </div>
               ))}
-            </div>
+            </motion.div>
             {/* Description  */}
             <div>
               <h1 className="text-xl font-medium mb-3">Description</h1>
@@ -106,10 +124,13 @@ const CarDetails = () => {
                 ))}
               </ul>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
         {/* right booking form  */}
-        <form
+        <motion.form
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
           className="shadow-lg h-max sticky top-18 rounded-xl p-6 space-y-6 text-gray-500 "
           onSubmit={handleSubmit}
         >
@@ -121,7 +142,9 @@ const CarDetails = () => {
           <hr className="border-borderColor my-6" />
           <div className="flex flex-col gap-2">
             <label htmlFor="pickup-date"> Pickup Date</label>
-            <input value={pickupDate} onChange={(e)=>setPickupDate(e.target.value)}
+            <input
+              value={pickupDate}
+              onChange={(e) => setPickupDate(e.target.value)}
               type="date"
               className="border border-borderColor px-3 py-2 rounded-lg"
               required
@@ -131,7 +154,9 @@ const CarDetails = () => {
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="return-date"> Return Date</label>
-            <input onChange={(e)=>setReturnDate(e.target.value)} value={returnDate}
+            <input
+              onChange={(e) => setReturnDate(e.target.value)}
+              value={returnDate}
               type="date"
               className="border border-borderColor px-3 py-2 rounded-lg"
               required
@@ -145,7 +170,7 @@ const CarDetails = () => {
           <p className="text-center text-sm">
             No credit card required to reserve
           </p>
-        </form>
+        </motion.form>
       </div>
     </div>
   ) : (
