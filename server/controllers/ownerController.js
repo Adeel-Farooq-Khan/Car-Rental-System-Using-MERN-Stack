@@ -68,7 +68,7 @@ export const toggleCarAvailability = async (req, res) => {
   try {
     const { _id } = req.user;
     const { carId } = req.body;
-    const car = await Car.findById({ carId });
+    const car = await Car.findById(carId);
 
     // check car bleongs to owner or not
     if (car.owner.toString() !== _id.toString()) {
@@ -89,7 +89,7 @@ export const deleteCar = async (req, res) => {
   try {
     const { _id } = req.user;
     const { carId } = req.body;
-    const car = await Car.findById({ carId });
+    const car = await Car.findById(carId);
 
     // check car bleongs to owner or not
     if (car.owner.toString() !== _id.toString()) {
@@ -119,17 +119,17 @@ export const getDashboardData = async (req, res) => {
     }
 
     const cars = await Car.find({ owner: _id });
-    const bookings = await Booking.fing({ owner: _id })
+  const bookings = await Booking.find({ owner: _id }) 
       .populate("car")
       .sort({ createdAt: -1 });
 
     const pendingBookings = await Booking.find({
       owner: _id,
-      status: " pending",
+      status: "pending",
     });
     const completedBookings = await Booking.find({
       owner: _id,
-      status: " confirmed",
+      status: "confirmed",
     });
 
     // calculate monthlyrevenue from bookings
@@ -148,6 +148,8 @@ export const getDashboardData = async (req, res) => {
     };
 
     res.json({ success: true, dashboardData });
+    console.log("Dashboard access by:", req.user);
+
   } catch (error) {
     console.log(error.message);
     res.json({ success: false, message: error.message });
