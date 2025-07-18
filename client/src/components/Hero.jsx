@@ -36,12 +36,17 @@ const Hero = () => {
         Luxury cars on Rent
       </motion.h1>
       <motion.form
-        initial={{ y: 50, opacity: 0, scale: 0.95 }}
-        animate={{ scale: 1, y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.4 }}
         onSubmit={handleSearch}
-        className="flex flex-col md:flex-row items-start md:items-center
-justify-between p-6 rounded-1g md: rounded-full w-full max-w-80 md:max-w-200 bg-white shadow-[0px_8px_20px_rgba(0,0,0,0.1)]"
+        className="
+    flex flex-col gap-4
+    md:flex-row md:gap-10
+    items-start md:items-center
+    justify-between
+    p-4 md:p-6
+    rounded-xl md:rounded-full
+    w-[90%] max-w-lg md:max-w-4xl
+    bg-white shadow-[0px_8px_20px_rgba(0,0,0,0.1)]
+  "
       >
         <div className="flex flex-col md:flex-row items-start md:items-center gap-10 min-md:ml-8">
           <div className="flex flex-col items-start gap-2">

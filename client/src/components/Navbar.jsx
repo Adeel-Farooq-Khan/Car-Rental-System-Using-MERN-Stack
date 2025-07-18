@@ -52,10 +52,15 @@ const Navbar = ({}) => {
        } ${open ? "max-sm:translate-x-0" : "max-sm:translate-x-full"} `}
       >
         {menuLinks.map((link, index) => (
-          <Link key={index} to={link.path}>
-            {link.name}
-          </Link>
-        ))}
+  <Link
+    key={index}
+    to={link.path}
+    onClick={() => setOpen(false)}
+  >
+    {link.name}
+  </Link>
+))}
+
 
         <div className="hidden lg:flex items-center text-sm gap-2 border border-borderColor px-3 rounded-full max-w-56">
           <input
